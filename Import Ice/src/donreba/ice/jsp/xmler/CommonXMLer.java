@@ -15,7 +15,6 @@ import org.jdom.output.XMLOutputter;
 
 public class CommonXMLer
 {
-
     public void initWriter(Writer writer)
     {
         out = writer;
