@@ -4,7 +4,6 @@
 
 package donreba.ice.jsp.xmler;
 
-import java.util.HashMap;
 import org.jdom.Element;
 
 // Referenced classes of package donreba.ice.jsp.xmler:

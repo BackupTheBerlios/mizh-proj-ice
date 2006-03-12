@@ -7,7 +7,6 @@ package donreba.ice.servlets;
 import donreba.ice.common.Logger;
 import donreba.ice.common.Settings;
 import donreba.ice.jdbc.DBUtils;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;

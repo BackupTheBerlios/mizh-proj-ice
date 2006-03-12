@@ -49,70 +49,78 @@ public class DBUtils
         if ((s4 = (String)classes.get(s3)) == null)
             return null;
         Connection connection;
-        Class.forName(s4);
-        connection = DriverManager.getConnection(s, s1, s2);
-        Logger.log("Successful connection to " + s);
-        currConn = connection;
-        return connection;
-        Object obj;
-        obj;
-        Logger.log("Can't found class: " + s4, "Error");
-        Logger.log("Exception: " + ((ClassNotFoundException) (obj)).getMessage(), "Error");
-        break MISSING_BLOCK_LABEL_177;
-        obj;
-        Logger.log("Can't connect to database: " + s, "Error");
-        Logger.log("Exception: " + ((SQLException) (obj)).getMessage(), "Error");
-        return null;
+        
+        try{
+        	Class.forName(s4);
+        	connection = DriverManager.getConnection(s, s1, s2);
+        	Logger.log("Successful connection to " + s);
+        	currConn = connection;
+        	return connection;
+        }
+        catch(ClassNotFoundException obj){
+        	Logger.log("Can't found class: " + s4, "Error");
+        	Logger.log("Exception: " + ((ClassNotFoundException) (obj)).getMessage(), "Error");
+        	return null;
+        }
+        catch(SQLException obj){
+        	Logger.log("Can't connect to database: " + s, "Error");
+            Logger.log("Exception: " + ((SQLException) (obj)).getMessage(), "Error");        	
+        	return null;
+        }
     }
 
     public static Connection createConnectionFromPool(String s)
     {
         Connection connection;
-        InitialContext initialcontext = new InitialContext();
-        Context context = (Context)initialcontext.lookup("java:/comp/env");
-        DataSource datasource = (DataSource)context.lookup(s);
-        connection = datasource.getConnection();
-        currConn = connection;
-        return connection;
-        Object obj;
-        obj;
-        Logger.log("Can't connect to database: " + s, "Error");
-        Logger.log("Exception: " + ((SQLException) (obj)).getMessage(), "Error");
-        break MISSING_BLOCK_LABEL_154;
-        obj;
-        Logger.log("Can't connect to database: " + s, "Error");
-        Logger.log("Exception: " + ((NamingException) (obj)).getMessage(), "Error");
-        return null;
+        try{
+        	InitialContext initialcontext = new InitialContext();
+        	Context context = (Context)initialcontext.lookup("java:/comp/env");
+        	DataSource datasource = (DataSource)context.lookup(s);
+        	connection = datasource.getConnection();
+        	currConn = connection;
+        	return connection;
+    	}catch(SQLException obj){	
+    		Logger.log("Can't connect to database: " + s, "Error");
+        	Logger.log("Exception: " + ((SQLException) (obj)).getMessage(), "Error");
+        	return null;
+    	}catch(NamingException obj){
+    		Logger.log("Can't connect to database: " + s, "Error");
+        	Logger.log("Exception: " + ((NamingException) (obj)).getMessage(), "Error");
+        	return null;
+    	}
     }
 
     public static ResultSet sqlQueryRun(String s)
     {
-        if (currConn == null)
-            return null;
-        ResultSet resultset;
-        Statement statement = currConn.createStatement();
-        resultset = statement.executeQuery(s);
-        return resultset;
-        SQLException sqlexception;
-        sqlexception;
-        Logger.log("sqlQueryRun: Can't run query: " + s, "Error");
-        Logger.log("Exception: " + sqlexception.getMessage(), "Error");
-        return null;
+        try{
+        	if (currConn == null)
+            	return null;
+        	ResultSet resultset;
+        	Statement statement = currConn.createStatement();
+        	resultset = statement.executeQuery(s);
+        	return resultset;
+    	}catch(SQLException sqlexception){
+    		Logger.log("sqlQueryRun: Can't run query: " + s, "Error");
+    		Logger.log("Exception: " + sqlexception.getMessage(), "Error");
+    		return null;
+    	}
     }
 
     public static int sqlUpdateRun(String s)
     {
-        if (currConn == null)
-            return -3;
-        int i;
-        Statement statement = currConn.createStatement();
-        i = statement.executeUpdate(s);
-        return i;
-        SQLException sqlexception;
-        sqlexception;
-        Logger.log("sqlQueryRun: Can't run query: " + s, "Error");
-        Logger.log("Exception: " + sqlexception.getMessage(), "Error");
-        return -3;
+        try{
+        	if (currConn == null)
+        		return -3;
+        	int i;
+        	Statement statement = currConn.createStatement();
+        	i = statement.executeUpdate(s);
+        	return i;
+        }
+        catch(SQLException sqlexception){
+        	Logger.log("sqlQueryRun: Can't run query: " + s, "Error");
+        	Logger.log("Exception: " + sqlexception.getMessage(), "Error");
+        	return -3;
+        }
     }
 
     public static void closeConnection()

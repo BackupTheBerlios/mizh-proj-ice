@@ -8,10 +8,8 @@ import donreba.ice.common.HTMLHelper;
 import donreba.ice.common.Logger;
 import donreba.ice.jdbc.DBUtils;
 import donreba.ice.jdbc.SQLGenerator;
-import donreba.ice.jsp.xmler.HtmlXMLer;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.servlet.ServletRequest;
 import org.jdom.Element;
 
 // Referenced classes of package donreba.ice.jsp:

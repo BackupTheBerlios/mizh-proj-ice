@@ -7,7 +7,6 @@ package donreba.ice.servlets;
 import donreba.ice.common.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 
 public class CommonServlet extends HttpServlet
