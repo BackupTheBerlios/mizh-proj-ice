@@ -1,7 +1,3 @@
-// Decompiled by Jad v1.5.8e2. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://kpdus.tripod.com/jad.html
-// Decompiler options: packimports(3) space 
-
 package donreba.ice.jsp;
 
 import donreba.ice.common.HTMLHelper;
@@ -15,8 +11,19 @@ import org.jdom.Element;
 // Referenced classes of package donreba.ice.jsp:
 //            SketchSite
 
-public class Sample extends SketchSite
-{
+public class Sample extends SketchSite{
+	
+    protected final String ROOT_TYPE_ID = "1";
+    protected final String SQL_SEPARATOR = "_";
+    protected final String OBJ_TYPE_TABLE = "obj_type";
+    protected final String NAME_COLUMN = "name";
+    protected final String ID_COLUMN = "id";
+    public String obj_type_id;
+    protected Element sheet;
+    protected final String SHEET_ID = "sheet_obj_type";
+    protected final String TABLE_ID = "obj_type_table";
+    protected final String CHILD_TABLE_ID = "child_obj_type_table";
+    protected final String ATTR_TABLE_ID = "attr_table";
 
     public Sample()
     {
@@ -120,24 +127,30 @@ public class Sample extends SketchSite
         String s1;
         String s2;
         String s3;
+        
         if (s.compareTo("") == 0)
         {
             outObjectType("1");
             return;
         }
+        
         createTable("sheet_obj_type", "", "mainSheet_cell");
         Element element = xmler.getElementById("sheet_obj_type");
         element.setAttribute("cellSpacing", "0");
         element.setAttribute("cellPadding", "0");
+        
         s1 = SQLGenerator.generateSQLbyObjectType(s);
         s2 = SQLGenerator.generateSQLbyParentType(s);
         s3 = SQLGenerator.generateSQLforAttrsbyObjectType(s);
+        
         ResultSet resultset;
         ResultSet resultset1;
         ResultSet resultset2;
+        
         resultset = DBUtils.sqlQueryRun(s1);
         resultset1 = DBUtils.sqlQueryRun(s2);
         resultset2 = DBUtils.sqlQueryRun(s3);
+        
         if (resultset == null || resultset1 == null || resultset2 == null)
         {
             mainSheet.setText("Error: ResultSet is null");
@@ -156,16 +169,4 @@ public class Sample extends SketchSite
         }
         return;
     }
-
-    protected final String ROOT_TYPE_ID = "1";
-    protected final String SQL_SEPARATOR = "_";
-    protected final String OBJ_TYPE_TABLE = "obj_type";
-    protected final String NAME_COLUMN = "name";
-    protected final String ID_COLUMN = "id";
-    public String obj_type_id;
-    protected Element sheet;
-    protected final String SHEET_ID = "sheet_obj_type";
-    protected final String TABLE_ID = "obj_type_table";
-    protected final String CHILD_TABLE_ID = "child_obj_type_table";
-    protected final String ATTR_TABLE_ID = "attr_table";
 }
